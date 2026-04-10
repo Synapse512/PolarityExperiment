@@ -1,0 +1,12 @@
+PolarityExperiment
+    index.html - home page, entry point
+    main.js - idk
+    style.css - idk
+
+pages
+    article1.html - yes
+    article2.html - yes
+    results.html - yes
+
+docs
+    info.txt 
