@@ -1,3 +1,5 @@
+file structure:
+
 PolarityExperiment
     index.html - home page, entry point
     main.js - idk
@@ -10,3 +12,41 @@ pages
 
 docs
     info.txt 
+
+
+/--/
+
+How the program works:
+
+1 - Click start button
+
+2 - Pick random polarity, start specific polarity article
+
+3 - Start timer for how long until user clicks finish reading button
+
+4 - Click "finish reading", end timer, and show 5 questions
+    start tracking time from then to submit questions
+
+5 - Ask these questions on a scale of 1 - 5:
+    "How hard did you have to work to stay focused on reading?"
+    "How alert did you feel while reading?"
+    "Do you feel any sort of fatigue in your eyes?"
+
+6 - Repeat for 2nd polarity article
+
+7 - Display results/data, and provide copy and paste button
+    ask user to copy and paste the data into the google form, and submit
+
+8 - Thank user for participation 
+
+/--/
+
+FACTORS (what needs to be recorded/done:)
+-Pick random number when program is opened
+-Data save which polarity is which article
+-Data save time from start to end reading
+-Data save time from end reading to submit questions
+-Data save qualatative question rankings
+
+-Print all data at end, provide copy feature
+
