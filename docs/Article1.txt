@@ -1,4 +1,5 @@
 https://studycorgi.com/information-security-policy-and-strategy/
+400 words
 
 Well-developed and documented policies and strategies are the best practice form of controls in information security (IS) (Rhodes-Ousley, 2013, p. 58). Given the significance of IS for healthcare (Landi, 2015), the implementation of these practices appears to be a must for it.
 
