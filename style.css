@@ -2,6 +2,10 @@
     padding: 100px;
 }
 
+.linePadding {
+    width: 50%;
+}
+
 .center-text {
     text-align: center;
 }
