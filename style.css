@@ -2,12 +2,16 @@
     padding: 100px;
 }
 
-.linePadding {
-    width: 50%;
-}
-
 .center-text {
     text-align: center;
+}
+
+.pageTitle {
+    margin-top: 0;
+}
+
+.informationTitle {
+    margin-bottom: 24px;
 }
 
 .informationHeader {
@@ -18,6 +22,20 @@
 
 .instructionsText {
     font-size: 1.1rem;
+    margin-top: 12px;
+    padding-left: 28px;
+}
+
+.instructionsText li {
+    margin-bottom: 10px;
+}
+
+.sectionSpacing {
+    height: 32px;
+}
+
+.sectionDivider {
+    margin: 32px 0;
 }
 
 .centerButton {
@@ -31,4 +49,77 @@
 .beginTestButton {
     padding: 10px 10px;
     font-size: 20px;
+}
+
+.hiddenScreen {
+    display: none;
+}
+
+.experimentScreen {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.article {
+    padding: 30px;
+    border-radius: 12px;
+    margin-top: 20px;
+    line-height: 1.7;
+}
+
+.question {
+    margin-bottom: 24px;
+}
+
+.lightMode {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #cccccc;
+}
+
+.darkMode {
+    background-color: #111111;
+    color: #f5f5f5;
+    border: 1px solid #333333;
+}
+
+.finishButton,
+.submitButton,
+.copyButton,
+.nextButton {
+    padding: 12px 20px;
+    font-size: 18px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+resultsSection {
+    white-space: pre-wrap;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.experiment-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.articleSection {
+    flex: 2;
+}
+
+.questionSidebar {
+    flex: 1;
+    padding: 20px;
+    border-left: 2px solid #ccc;
+    background: rgba(128, 128, 128, 0.1);
+    height: 80vh;
+    overflow-y: auto;
+}
+
+.questionChoice {
+    display: block;
+    margin: 10px 0;
 }
