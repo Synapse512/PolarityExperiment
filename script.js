@@ -1,6 +1,6 @@
 //4-22/26 this is gonna be a close one
 const introScreen = document.getElementById("introScreen");
-const app = document.getElementById("testContainer");
+const testContainer = document.getElementById("testContainer");
 const startButton = document.getElementById("beginTestButton");
 
 
@@ -79,14 +79,13 @@ let testScore = 0;
 let testData = [];
 let polarity = [];
 
-
 // init program to go from home page to test
 startButton.addEventListener("click", function() {
     introScreen.classList.add("hiddenScreen");
     testContainer.classList.remove("hiddenScreen");
     const randomPolarity = Math.random() < 0.5;
     polarity = randomPolarity ? ["lightMode", "darkMode"] : ["darkMode", "lightMode"];
-    renderArticle();
+    loadArticle();
 })
 
 // start article init based on index
@@ -102,15 +101,15 @@ function loadArticle() {
                 <h2>${article.title}</h2>
                 <p>${article.text}</p>
             </div>
-            <button class="finishButton" onclick="openSidebar()">Finish Reading</button>
+            <button class="finishButton" onclick="loadQuestionSidebar()">Finish Reading</button>
         </div>
     `;
-    startTestTime = Date.now();
+    startTestTime = Date.now(); // FIXED: lowercase now()
 }
 
 function loadQuestionSidebar() {
-    // divide by 1000 to get seconds instead of milliseconds
-    readingTime = (Date.now() - startTestTime / 1000);
+    // FIXED: added parentheses and lowercase now()
+    readingTime = (Date.now() - startTestTime) / 1000; 
     const article = articles[currentArticleIndex];
 
     testContainer.innerHTML = `
@@ -139,6 +138,101 @@ function loadQuestionSidebar() {
 
 function finishTest() {
     const article = articles[currentArticleIndex];
-    let 
+    let correctAnswerCount = 0;
 
+    article.testQuestions.forEach(function (q, i) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (selected && parseInt(selected.value) === q.correct) {
+            correctAnswerCount++;
+        }
+    });
+    
+    testScore = correctAnswerCount;
+    loadSurvey();
+}
+
+function loadSurvey() {
+    document.body.className = "mainBody";
+    startTestTime = Date.now(); // FIXED: lowercase now()
+
+    testContainer.innerHTML = `
+        <div class="testScreen">
+            <h1>Post-Task Evaluation</h1>
+            <p>Please rate your experience during the previous section:</p>
+            
+            <div class="question">
+                <p>1. How much <strong>mental effort</strong> was required to maintain focus? (1 = Low Effort, 5 = High Effort)</p>
+                <input type="range" min="1" max="5" id="q1" value="3">
+            </div>
+
+            <div class="question">
+                <p>2. How <strong>alert or awake</strong> did you feel while reading? (1 = Drowsy, 5 = Fully Alert)</p>
+                <input type="range" min="1" max="5" id="q2" value="3">
+            </div>
+
+            <div class="question">
+                <p>3. To what extent did you experience <strong>eye strain or discomfort</strong>? (1 = None, 5 = Severe)</p>
+                <input type="range" min="1" max="5" id="q3" value="3">
+            </div>
+
+            <div class="question">
+                <p>4. How <strong>confident</strong> are you in your testQuestions answers? (1 = Not Confident, 5 = Very Confident)</p>
+                <input type="range" min="1" max="5" id="q4" value="3">
+            </div>
+
+            <button class="submitButton" onclick="saveData()">Submit Feedback</button>
+        </div>
+    `;
+}
+
+function saveData() {
+    // FIXED: lowercase now() and parentheses
+    const surveyTime = (Date.now() - startTestTime) / 1000;
+
+    testData.push({
+        mode: polarity[currentArticleIndex],
+        readingTime: readingTime.toFixed(2),
+        score: testScore,
+        survey: {
+            focus: document.getElementById("q1").value,
+            alertness: document.getElementById("q2").value,
+            fatigue: document.getElementById("q3").value
+        }
+    });
+
+    currentArticleIndex++;
+    if (currentArticleIndex < articles.length) {
+        loadArticle();
+    } else {
+        printResults();
+    }
+}
+
+function printResults() {
+    let resultString = "";
+    testData.forEach((data, index) => {
+        resultString += `\nArticle ${index + 1} (${data.mode}):\n`;
+        resultString += `- Reading Time: ${data.readingTime}s\n`;
+        resultString += `- Quiz Score: ${data.score}/5\n`;
+        resultString += `- Focus: ${data.survey.focus}/5\n`;
+        resultString += `- Alert: ${data.survey.alertness}/5\n`;
+        resultString += `- Fatigue: ${data.survey.fatigue}/5\n`;
+    });
+
+    testContainer.innerHTML = `
+        <div class="testScreen">
+            <h2>Test Complete</h2>
+            <p>Copy the data below, and paste into the Google Form:</p>
+            <textarea id="resultsText" readonly style="width:100%; height:200px;">${resultString}</textarea>
+            <button class="copyButton" id="copyButton" onclick="copyResults()">Copy Data</button>
+        </div>
+    `;
+}
+
+function copyResults() {
+    const copyText = document.getElementById("resultsText");
+    const copyBtn = document.getElementById("copyButton");
+    copyText.select();
+    document.execCommand("copy");
+    copyBtn.innerText = "Copied!";
 }
