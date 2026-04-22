@@ -104,11 +104,10 @@ function loadArticle() {
             <button class="finishButton" onclick="loadQuestionSidebar()">Finish Reading</button>
         </div>
     `;
-    startTestTime = Date.now(); // FIXED: lowercase now()
+    startTestTime = Date.now();
 }
 
 function loadQuestionSidebar() {
-    // FIXED: added parentheses and lowercase now()
     readingTime = (Date.now() - startTestTime) / 1000; 
     const article = articles[currentArticleIndex];
 
@@ -186,7 +185,6 @@ function loadSurvey() {
 }
 
 function saveData() {
-    // FIXED: lowercase now() and parentheses
     const surveyTime = (Date.now() - startTestTime) / 1000;
 
     testData.push({
