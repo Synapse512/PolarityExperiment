@@ -152,7 +152,7 @@ function finishTest() {
 
 function loadSurvey() {
     document.body.className = "mainBody";
-    startTestTime = Date.now(); // FIXED: lowercase now()
+    startTestTime = Date.now();
 
     testContainer.innerHTML = `
         <div class="testScreen">
