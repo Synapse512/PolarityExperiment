@@ -1,4 +1,5 @@
-//4-22/26 this is gonna be a close one
+// 4/22/26 this is gonna be a close one
+// 4/27/26 only god can save me now
 const introScreen = document.getElementById("introScreen");
 const testContainer = document.getElementById("testContainer");
 const startButton = document.getElementById("beginTestButton");
@@ -72,6 +73,7 @@ let articles = [
     }
 ];
 
+// data variables
 let currentArticleIndex = 0;
 let startTestTime;
 let readingTime;
@@ -103,7 +105,6 @@ function loadPreTest() {
     testContainer.innerHTML = `
         <div class="testScreen">
             <h1>Pre-Test Questions</h1>
-            <p>Please answer the following questions before starting the experiment:</p>
             
             <div class="question">
                 <p>1. How bright is the ambient light around you? (1 = Dark | 5 = Bright)</p>
@@ -115,7 +116,7 @@ function loadPreTest() {
                 <input type="text" id="preTestTime" value="${currentTime}" placeholder="HH:MM" maxlength="5">
             </div>
 
-            <button class="submitButton" onclick="submitPreTest()">Continue to Test</button>
+            <button type="button" class="submitButton" onclick="submitPreTest()">Continue</button>
         </div>
     `;
 }
@@ -139,7 +140,7 @@ function loadArticle() {
                 <h2>${article.title}</h2>
                 <p>${article.text}</p>
             </div>
-            <button class="finishButton" onclick="loadQuestionSidebar()">Finish Reading</button>
+            <button type="button" class="finishButton" onclick="loadQuestionSidebar()">Finish Reading</button>
         </div>
     `;
     startTestTime = Date.now();
@@ -168,7 +169,7 @@ function loadQuestionSidebar() {
                         `).join('')}
                     </div>
                 `).join('')}
-                <button class="submitButton" onclick="finishTest()">Submit Test</button>
+                <button type="button" class="submitButton" onclick="finishTest()">Submit Test</button>
             </div>
         </div>
     `;
@@ -219,7 +220,7 @@ testContainer.innerHTML = `
             <input type="range" min="1" max="5" id="q4" value="3">
         </div>
 
-        <button class="submitButton" onclick="saveData()">Submit Feedback</button>
+        <button type="button" class="submitButton" onclick="saveData()">Submit Feedback</button>
     </div>
 `;
 }
@@ -250,41 +251,54 @@ function saveData() {
 }
 
 function printResults() {
-    let resultString = `\nPre-Test Data:\n`;
-    resultString += `- Ambient Brightness: ${preTestBrightness}/5\n`;
-    resultString += `- Start Time: ${preTestTime}\n`;
-    testData.forEach((data, index) => {
-        resultString += `\nArticle ${index + 1} (${data.mode}):\n`;
-        resultString += `- Reading Time: ${data.readingTime}s\n`;
-        resultString += `- Question Time: ${data.questionTime}s\n`;
-        resultString += `- Quiz Score: ${data.score}/5\n`;
-        // These keys now match the survey object above
-        resultString += `- Effort: ${data.survey.effort}/5\n`;
-        resultString += `- Strain: ${data.survey.strain}/5\n`;
-        resultString += `- Visibility: ${data.survey.visibility}/5\n`;
-        resultString += `- Alertness: ${data.survey.alertness}/5\n`;
+    let dataValues = [preTestBrightness, preTestTime];
+    
+    testData.forEach((data) => {
+        const modeNum = data.mode === "lightMode" ? 1 : 0;
+        
+        dataValues.push(modeNum);
+        dataValues.push(data.readingTime);
+        dataValues.push(data.questionTime);
+        dataValues.push(data.score);
+        dataValues.push(data.survey.effort);
+        dataValues.push(data.survey.strain);
+        dataValues.push(data.survey.visibility);
+        dataValues.push(data.survey.alertness);
     });
 
-    testContainer.innerHTML = `
+    let resultString = dataValues.join(", ");
+
+testContainer.innerHTML = `
         <div class="testScreen">
             <h2>Experiment End</h2>
             <p>Thank you for your participation, it is greatly appreciated</p>
-            <b>Copy the data below, and paste into the Google Form:</b>
-            <textarea id="resultsText" readonly style="width:100%; height:200px; font-family: monospace;">${resultString}</textarea>
-            <button class="copyButton" id="copyButton" onclick="copyResults()">Copy Data</button>
+            <br> <br>
+            
+            <p>Copy the data below and paste it into the Google Form: <a href="https://forms.gle/zEyZ5rA7sbs7PsrFA">https://forms.gle/zEyZ5rA7sbs7PsrFA</a></p>
+            <textarea id="resultsText" readonly style="width:100%; height:100px;">${resultString}</textarea>
+            <br>
+            <button type="button" id="copyButton" onclick="copyResults(event)">Copy Data</button>
+
+            <div>
+                <h3>Data Key:</h3>
+                <p>The values follow this meaning in order:</p>
+                <p>Ambient, Time, Mode 1, Read Time 1, Quest Time 1, Score 1, Effort 1, Strain 1, Vision 1, Awake 1, Mode 2, Read Time 2, Quest Time 2, Score 2, Effort 2, Strain 2, Vision 2, Awake 2</p>
+            </div>
         </div>
     `;
 }
 
-function copyResults() {
+function copyResults(event) {
+    if (event) event.preventDefault();
     const copyText = document.getElementById("resultsText");
     const copyBtn = document.getElementById("copyButton");
+    
     navigator.clipboard.writeText(copyText.value).then(() => {
-        copyBtn.innerText = "Copied";
+        copyBtn.innerText = "Copied!";
         setTimeout(() => {
-            copyBtn.innerText = "Copy data";
+            copyBtn.innerText = "Copy Data";
         }, 2000);
-    }).catch(() => {
-        copyBtn.innerText = "Copy failed";
+    }).catch(err => {
+        console.error(err);
     });
 }
