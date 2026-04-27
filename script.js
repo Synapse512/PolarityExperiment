@@ -274,7 +274,7 @@ testContainer.innerHTML = `
             <p>Thank you for your participation, it is greatly appreciated</p>
             <br> <br>
             
-            <p>Copy the data below and paste it into the Google Form: <a href="https://forms.gle/zEyZ5rA7sbs7PsrFA">https://forms.gle/zEyZ5rA7sbs7PsrFA</a></p>
+            <p>Copy the data below and paste it into the Google Form: <a href="https://forms.gle/zEyZ5rA7sbs7PsrFA" target="_blank">https://forms.gle/zEyZ5rA7sbs7PsrFA</a></p>
             <textarea id="resultsText" readonly style="width:100%; height:100px;">${resultString}</textarea>
             <br>
             <button type="button" id="copyButton" onclick="copyResults(event)">Copy Data</button>
