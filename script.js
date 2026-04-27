@@ -198,7 +198,7 @@ function loadSurvey() {
 testContainer.innerHTML = `
     <div class="testScreen">
         <h1>Evaluation</h1>
-        <p>Please rate your experience during the previous section:</p>
+        <p>Please answer the questions based on the test that you just finished</p>
         
         <div class="question">
             <p>1. How much effort did it require to focus on the test? (1 = Low Effort | 5 = High Effort)</p>
