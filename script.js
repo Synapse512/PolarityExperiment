@@ -14,9 +14,9 @@ let articles = [
             {
                 q: "What is a strategy defined as?",
                 options: [
-                    "A 'description of management intent'",
-                    "A 'complete plan for defense, detection, and deterrence'",
-                    "A 'unified classification for the phenomena'"
+                    "A “description of management intent”",
+                    "A “complete plan for defense, detection, and deterrence”",
+                    "A “unified classification for the phenomena”"
                 ],
                 correct: 1
             },
