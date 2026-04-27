@@ -2,19 +2,17 @@ file structure:
 
 PolarityExperiment
     index.html - home page, entry point
-    main.js - idk
-    style.css - idk
-
-pages
-    article1.html - yes
-    article2.html - yes
-    results.html - yes
+    script.js - experiment logic, data saving and element switching
+    style.css - format, sizing, etc
 
 docs
-    info.txt 
+    info.txt - explanation of repo
+    Article1.txt - full text for article 1
+    Article2.txt - full text for article 2
 
 
 /--/
+
 
 How the program works:
 
@@ -28,9 +26,13 @@ How the program works:
     start tracking time from then to submit questions
 
 5 - Ask these questions on a scale of 1 - 5:
-    "How hard did you have to work to stay focused on reading?"
-    "How alert did you feel while reading?"
-    "Do you feel any sort of fatigue in your eyes?"
+        How much effort did it require to focus on the test? (1 = Low Effort | 5 = High Effort)
+
+        To what scale did you feel any sort of eye strain or ocular discomfort? (1 = None | 5 = Severe)
+
+        To what scale was it easy to see the text? (1 = Very Difficult | 5 = Very Easy)
+
+      How awake did you feel while taking this test? (1 = Drowsy | 5 = Fully Awake)
 
 6 - Repeat for 2nd polarity article
 
@@ -38,15 +40,4 @@ How the program works:
     ask user to copy and paste the data into the google form, and submit
 
 8 - Thank user for participation 
-
-/--/
-
-FACTORS (what needs to be recorded/done:)
--Pick random number when program is opened
--Data save which polarity is which article
--Data save time from start to end reading
--Data save time from end reading to submit questions
--Data save qualatative question rankings
-
--Print all data at end, provide copy feature
 

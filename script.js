@@ -75,9 +75,13 @@ let articles = [
 let currentArticleIndex = 0;
 let startTestTime;
 let readingTime;
+let questionStartTime;
+let questionTime;
 let testScore = 0;
 let testData = [];
 let polarity = [];
+let preTestBrightness;
+let preTestTime;
 
 // init program to go from home page to test
 startButton.addEventListener("click", function() {
@@ -85,8 +89,42 @@ startButton.addEventListener("click", function() {
     testContainer.classList.remove("hiddenScreen");
     const randomPolarity = Math.random() < 0.5;
     polarity = randomPolarity ? ["lightMode", "darkMode"] : ["darkMode", "lightMode"];
-    loadArticle();
+    loadPreTest();
 })
+
+// load pre-test questions
+function loadPreTest() {
+    document.body.className = "mainBody";
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const currentTime = `${hours}:${minutes}`;
+    
+    testContainer.innerHTML = `
+        <div class="testScreen">
+            <h1>Pre-Test Questions</h1>
+            <p>Please answer the following questions before starting the experiment:</p>
+            
+            <div class="question">
+                <p>1. How bright is the ambient light around you? (1 = Dark | 5 = Bright)</p>
+                <input type="range" min="1" max="5" id="preTestBrightness" value="3">
+            </div>
+
+            <div class="question">
+                <p>2. What time is it right now? (24-hour format)</p>
+                <input type="text" id="preTestTime" value="${currentTime}" placeholder="HH:MM" maxlength="5">
+            </div>
+
+            <button class="submitButton" onclick="submitPreTest()">Continue to Test</button>
+        </div>
+    `;
+}
+
+function submitPreTest() {
+    preTestBrightness = document.getElementById("preTestBrightness").value;
+    preTestTime = document.getElementById("preTestTime").value;
+    loadArticle();
+}
 
 // start article init based on index
 function loadArticle() {
@@ -108,7 +146,8 @@ function loadArticle() {
 }
 
 function loadQuestionSidebar() {
-    readingTime = (Date.now() - startTestTime) / 1000; 
+    readingTime = (Date.now() - startTestTime) / 1000;
+    questionStartTime = Date.now();
     const article = articles[currentArticleIndex];
 
     testContainer.innerHTML = `
@@ -136,6 +175,7 @@ function loadQuestionSidebar() {
 }
 
 function finishTest() {
+    questionTime = (Date.now() - questionStartTime) / 1000;
     const article = articles[currentArticleIndex];
     let correctAnswerCount = 0;
 
@@ -154,47 +194,50 @@ function loadSurvey() {
     document.body.className = "mainBody";
     startTestTime = Date.now();
 
-    testContainer.innerHTML = `
-        <div class="testScreen">
-            <h1>Post-Task Evaluation</h1>
-            <p>Please rate your experience during the previous section:</p>
-            
-            <div class="question">
-                <p>1. How much <strong>mental effort</strong> was required to maintain focus? (1 = Low Effort, 5 = High Effort)</p>
-                <input type="range" min="1" max="5" id="q1" value="3">
-            </div>
-
-            <div class="question">
-                <p>2. How <strong>alert or awake</strong> did you feel while reading? (1 = Drowsy, 5 = Fully Alert)</p>
-                <input type="range" min="1" max="5" id="q2" value="3">
-            </div>
-
-            <div class="question">
-                <p>3. To what extent did you experience <strong>eye strain or discomfort</strong>? (1 = None, 5 = Severe)</p>
-                <input type="range" min="1" max="5" id="q3" value="3">
-            </div>
-
-            <div class="question">
-                <p>4. How <strong>confident</strong> are you in your testQuestions answers? (1 = Not Confident, 5 = Very Confident)</p>
-                <input type="range" min="1" max="5" id="q4" value="3">
-            </div>
-
-            <button class="submitButton" onclick="saveData()">Submit Feedback</button>
+testContainer.innerHTML = `
+    <div class="testScreen">
+        <h1>Evaluation</h1>
+        <p>Please rate your experience during the previous section:</p>
+        
+        <div class="question">
+            <p>1. How much effort did it require to focus on the test? (1 = Low Effort | 5 = High Effort)</p>
+            <input type="range" min="1" max="5" id="q1" value="3">
         </div>
-    `;
+
+        <div class="question">
+            <p>2. To what scale did you feel any sort of eye strain or ocular discomfort? (1 = None | 5 = Severe)</p>
+            <input type="range" min="1" max="5" id="q2" value="3">
+        </div>
+
+        <div class="question">
+            <p>3. To what scale was it easy to see the text? (1 = Very Difficult | 5 = Very Easy)</p>
+            <input type="range" min="1" max="5" id="q3" value="3">
+        </div>
+
+        <div class="question">
+            <p>4. How awake did you feel while taking this test? (1 = Drowsy | 5 = Fully Awake)</p>
+            <input type="range" min="1" max="5" id="q4" value="3">
+        </div>
+
+        <button class="submitButton" onclick="saveData()">Submit Feedback</button>
+    </div>
+`;
 }
 
 function saveData() {
-    const surveyTime = (Date.now() - startTestTime) / 1000;
 
     testData.push({
+        preTestBrightness: preTestBrightness,
+        preTestTime: preTestTime,
         mode: polarity[currentArticleIndex],
         readingTime: readingTime.toFixed(2),
+        questionTime: questionTime.toFixed(2),
         score: testScore,
         survey: {
-            focus: document.getElementById("q1").value,
-            alertness: document.getElementById("q2").value,
-            fatigue: document.getElementById("q3").value
+            effort: document.getElementById("q1").value,      // Question 1
+            strain: document.getElementById("q2").value,      // Question 2
+            visibility: document.getElementById("q3").value,  // Question 3
+            alertness: document.getElementById("q4").value    // Question 4
         }
     });
 
@@ -207,21 +250,27 @@ function saveData() {
 }
 
 function printResults() {
-    let resultString = "";
+    let resultString = `\nPre-Test Data:\n`;
+    resultString += `- Ambient Brightness: ${preTestBrightness}/5\n`;
+    resultString += `- Start Time: ${preTestTime}\n`;
     testData.forEach((data, index) => {
         resultString += `\nArticle ${index + 1} (${data.mode}):\n`;
         resultString += `- Reading Time: ${data.readingTime}s\n`;
+        resultString += `- Question Time: ${data.questionTime}s\n`;
         resultString += `- Quiz Score: ${data.score}/5\n`;
-        resultString += `- Focus: ${data.survey.focus}/5\n`;
-        resultString += `- Alert: ${data.survey.alertness}/5\n`;
-        resultString += `- Fatigue: ${data.survey.fatigue}/5\n`;
+        // These keys now match the survey object above
+        resultString += `- Effort: ${data.survey.effort}/5\n`;
+        resultString += `- Strain: ${data.survey.strain}/5\n`;
+        resultString += `- Visibility: ${data.survey.visibility}/5\n`;
+        resultString += `- Alertness: ${data.survey.alertness}/5\n`;
     });
 
     testContainer.innerHTML = `
         <div class="testScreen">
-            <h2>Test Complete</h2>
-            <p>Copy the data below, and paste into the Google Form:</p>
-            <textarea id="resultsText" readonly style="width:100%; height:200px;">${resultString}</textarea>
+            <h2>Experiment End</h2>
+            <p>Thank you for your participation, it is greatly appreciated</p>
+            <b>Copy the data below, and paste into the Google Form:</b>
+            <textarea id="resultsText" readonly style="width:100%; height:200px; font-family: monospace;">${resultString}</textarea>
             <button class="copyButton" id="copyButton" onclick="copyResults()">Copy Data</button>
         </div>
     `;
@@ -230,7 +279,12 @@ function printResults() {
 function copyResults() {
     const copyText = document.getElementById("resultsText");
     const copyBtn = document.getElementById("copyButton");
-    copyText.select();
-    document.execCommand("copy");
-    copyBtn.innerText = "Copied!";
+    navigator.clipboard.writeText(copyText.value).then(() => {
+        copyBtn.innerText = "Copied";
+        setTimeout(() => {
+            copyBtn.innerText = "Copy data";
+        }, 2000);
+    }).catch(() => {
+        copyBtn.innerText = "Copy failed";
+    });
 }
