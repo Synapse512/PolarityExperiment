@@ -322,7 +322,7 @@ function printResults() {
             <div>
                 <h3>Data Key:</h3>
                 <p>The values follow this meaning in order:</p>
-                <p>Ambient, Time, Mode 1, Read Time 1, Quest Time 1, Score 1, Effort 1, Strain 1, Vision 1, Awake 1, Mode 2, Read Time 2, Quest Time 2, Score 2, Effort 2, Strain 2, Vision 2, Awake 2</p>
+                <p>Ambient, Time, Mode 1, Read Time 1, Question Time 1, Score 1, Effort 1, Strain 1, Vision 1, Awake 1, Mode 2, Read Time 2, Question Time 2, Score 2, Effort 2, Strain 2, Vision 2, Awake 2</p>
             </div>
         </div>
     `;
