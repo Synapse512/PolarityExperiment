@@ -6,6 +6,15 @@
     text-align: center;
 }
 
+.centerList {
+    display: inline-block;
+    text-align: left;
+}
+
+.centerDiv {
+  text-align: center;
+}
+
 .pageTitle {
     margin-top: 0;
 }

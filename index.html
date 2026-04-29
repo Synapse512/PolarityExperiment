@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Polarity Experiment</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body class="mainBody">
-    <div id="introScreen">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Polarity Experiment</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="mainBody">
+  <div id="introScreen">
 
     <!--Main page assets-->
     <h1 class="center-text pageTitle">Polarity Experiment</h1>
@@ -18,34 +20,50 @@
     <div class="centerButton">
       <button class="beginTestButton" id="beginTestButton">Begin Test</button>
     </div>
-    <p class="center-text">
-      <b>Please attempt to complete the experiment without distraction, as time spent influences the data</b>
-    </p>
+    <br>
+    <div class="centerDiv">
+      <p>Before starting:</p>
+      <ul class="centerList">
+        <li>Please temporarily disable any extension that affects the appearance of a web page</li>
+        <li> Attempt to stay focused during the experiment, as time spent affects the data collected</li>
+      </ul>
+    </div>
     <hr class="sectionDivider">
 
 
     <h1 class="center-text informationTitle">Information</h1>
-    
-      <b class="informationHeader">Test Instructions:</b>
-      <ol class="instructionsText">
-        <li>Click "Begin Test" button</li>
-        <li>Answer the 2 pre-test questions</li>
-        <li>Read given article, click "Finish Reading" button when finished</li>
-        <li>Answer the 5 questions, and submit them</li>
-        <li>Answer the 4 evaluation questions</li>
-        <li>Repeat steps 3 - 5 for second given article</li>
-        <li>Results screen will let you copy your data, copy and paste it into the Google Form, and please submit</li>
-      </ol>
+
+    <b class="informationHeader">Test Instructions:</b>
+    <ol class="instructionsText">
+      <li>Click "Begin Test" button</li>
+      <li>Answer the 2 pre-test questions</li>
+      <li>Read given article, click "Finish Reading" button when finished</li>
+      <li>Answer the 5 questions, and submit them</li>
+      <li>Answer the 4 evaluation questions</li>
+      <li>Repeat steps 3 - 5 for second given article</li>
+      <li>Results screen will let you copy your data, copy and paste it into the Google Form, and please submit</li>
+    </ol>
 
     <div class="sectionSpacing"></div>
     <b class="informationHeader">Experiment Explanation:</b>
-    <p><b>Why is this experiment being held?</b> This experiment aims to find patterns in how screen polarity can affect task endurance. Data is collected throughout the experiment to compare whether light or dark mode influence factors such as reading speed, searching text, alertness, etc. Time of day and ambient are also recorded to note whether these factors influence any sort of change as well.</p>
+    <p><b>Why is this experiment being held?</b> This experiment aims to find patterns in how screen polarity can affect
+      task endurance. Data is collected throughout the experiment to compare whether light or dark mode influence
+      factors such as reading speed, searching text, alertness, etc. Time of day and ambient are also recorded to note
+      whether these factors influence any sort of change as well.</p>
 
     <div class="sectionSpacing"></div>
     <b class="informationHeader">Privacy:</b>
-    <p>Through this application, no personal data is saved, nor has the capability included to save data. The application locally records all statistics throughout the experiment. Once the experiment has been completed, the results will not be shared unless explicitly submitted through the Google Form provided. The Google Form does not save any data except for the submitted results. You maintain the right to withdraw from the experiment at any time, whether before, during, or after you have participated in it, with no added consequence. All submitted data will be strictly used for academic purposes. The entire application is open sourced in interest of transparency, and is publicly available at: <a href="https://github.com/Synapse512/PolarityExperiment" target="_blank">https://github.com/Synapse512/PolarityExperiment</a></p>
-    </div>
-    <div id="testContainer" class="hiddenScreen"></div>
-  </body>
-  <script src="script.js"></script>
+    <p>Through this application, no personal data is saved, nor has the capability included to save data. The
+      application locally records all statistics throughout the experiment. Once the experiment has been completed, the
+      results will not be shared unless explicitly submitted through the Google Form provided. The Google Form does not
+      save any data except for the submitted results. You maintain the right to withdraw from the experiment at any
+      time, whether before, during, or after you have participated in it, with no added consequence. All submitted data
+      will be strictly used for academic purposes. The entire application is open sourced in interest of transparency,
+      and is publicly available at: <a href="https://github.com/Synapse512/PolarityExperiment"
+        target="_blank">https://github.com/Synapse512/PolarityExperiment</a></p>
+  </div>
+  <div id="testContainer" class="hiddenScreen"></div>
+</body>
+<script src="script.js"></script>
+
 </html>
